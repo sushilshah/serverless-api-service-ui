@@ -2,6 +2,39 @@
 
         <div class="container-fluid">
             <div class="row">
+
+                    <!-- <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <td>Id</td>
+                                    <td>Title</td>
+                                    <td>Amount</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let transfer of devices" [routerLink]="['/transfer']" [queryParams]="{ id: transfer.id }">
+                                    <td>{{transfer.id}}</td>
+                                    <td>{{transfer.title}}</td>
+                                    <td>{{transfer.amount}}</td>
+                                </tr>
+                            </tbody>
+                        </table>  -->
+
+
+
+                    <!-- <thead align="center">
+                            <tr>
+                                <th *ngFor = "let item of devices"> 
+                                  {{item}}
+                                </th>
+                            </tr>
+                        </thead>
+                       <tbody>
+                            <tr *ngFor = "let item of devices ">
+                
+               
+                        </tbody> -->
+
                 <div class="col-lg-3 col-md-6 col-sm-6">
                     <div class="card card-stats" >
                         <div class="card-header" data-background-color="orange">
@@ -122,6 +155,40 @@
                     </div>
                 </div>
             </div>
+
+            <div class="row">
+                    <div class="col-lg-12 col-md-12">
+                            <div class="card" >
+                                <div class="card-header" data-background-color="orange">
+                                    <h4 class="title">Devices Info</h4>
+                                    <p class="category">List of all the devices</p>
+                                </div>
+                                <div class="card-content table-responsive">
+                                    <table class="table table-hover">
+                                        <thead class="text-warning">
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Name</th>
+                                                <th>Alerts</th>
+                                                <th>Last Update</th>
+                                            </tr>
+                                        </thead>
+                                    <tbody>
+                                        <tr *ngFor="let transfer of devices" [routerLink]="['/transfer']" [queryParams]="{ id: transfer.id }">
+                                            <td>{{transfer.id}}</td>
+                                            <td>{{transfer.name}}</td>
+                                            <td>{{transfer.alerts | json}}</td>
+                                            <td>{{transfer.updated * 1000 | date:'yyyy-MM-dd HH:mm:ss Z'}}</td>
+                                        </tr>
+                                    </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+            </div>
+
+
 
             <div class="row">
                 <div class="col-lg-6 col-md-12">
@@ -392,4 +459,7 @@
                 </div>
             </div>
         </div>
+
+
+
 </div>
