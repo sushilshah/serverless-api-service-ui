@@ -96,21 +96,20 @@ export class DeviceDetailsComponent implements OnInit {
   deviceData: any;
   constructor(private serviceModule: ServicesModule,
     private activatedRoute: ActivatedRoute) {
-    this.serviceModule.getDevice().
-    subscribe(data =>{
-      this.deviceData = data;
-      console.log(this.deviceData );
-      console.log(data);
-    }, err => {
-      console.log('There is an error');
-      console.log(err);
-    });
-   }
-
-  ngOnInit() {
-    this.activatedRoute.params.subscribe(params => {
-      console.log("PARAMS")
-      console.log(params)
+    }
+    
+    ngOnInit() {
+      this.activatedRoute.params.subscribe(params => {
+        // console.log("params");
+        // // console.log(params);
+        this.serviceModule.getDevice(params['deviceId']).
+        subscribe(data => {
+          this.deviceData = data;
+          console.log(this.deviceData);
+        }, err => {
+          console.log('There is an error');
+          console.log(err);
+        });
     });
 
   }

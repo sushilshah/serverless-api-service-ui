@@ -16,7 +16,7 @@ const routes: Routes =[
       { path: 'signup',    component: SignupComponent },
       { path: '',          redirectTo: 'home', pathMatch: 'full' },
       // { path: '**',        component: NotFoundComponent },
-      { path: 'device-details/:param',     component: DeviceDetailsComponent},
+      { path: 'device-details/:deviceId',     component: DeviceDetailsComponent},
 ];
 
 @NgModule({

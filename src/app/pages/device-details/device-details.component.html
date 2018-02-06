@@ -1,5 +1,196 @@
-<p>
-  device-details works!
-</p>
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row" *ngIf="deviceData">
+      
+      <div class="col-lg-3 col-md-6 col-sm-6" >
+        <div class="card card-stats">
+          <div class="card-header" data-background-color="orange">
+            <i class="material-icons">content_copy</i>
+          </div>
+          <div class="card-content">
+            <p class="category">{{deviceData.name}}</p>
+            <h3 class="title">
+              <small>{{deviceData.status}}</small>
+            </h3>
+          </div>
+          <div class="card-footer">
+            <div class="stats">
+              <i class="material-icons text-danger">warning</i>
+              <a href="#pablo">Get More Space...</a>
+            </div>
+          </div>
+        </div>
+      </div>
 
-  <!-- <div echarts [options]="chartOption" class="demo-chart"></div> -->
+      <div class="col-lg-3 col-md-6 col-sm-6">
+          <div class="card card-stats" >
+              <div class="card-header" data-background-color="blue">
+                  <!-- <i class="material-icons">opacity</i> -->
+                  <i class="fa fa-thermometer-three-quarters"></i>
+              </div>
+              <div class="card-content">
+                  <p class="category">Humidity</p>
+                  <h3 class="title">{{deviceData.humidity}} %</h3>
+              </div>
+              <div class="card-footer">
+                  <div class="stats">
+                      <i class="material-icons">date_range</i> Last 24 Hours
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-lg-3 col-md-6 col-sm-6">
+          <div class="card card-stats" >
+              <div class="card-header" data-background-color="green">
+                  <i class="material-icons">store</i>
+              </div>
+              <div class="card-content">
+                  <p class="category">Current</p>
+                  <h3 class="title">{{deviceData.current}} %</h3>
+              </div>
+              <div class="card-footer">
+                  <div class="stats">
+                      <i class="material-icons">date_range</i> Last 24 Hours
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-lg-3 col-md-6 col-sm-6">
+          <div class="card card-stats" >
+              <div class="card-header" data-background-color="green">
+                  <i class="material-icons">store</i>
+              </div>
+              <div class="card-content">
+                  <p class="category">load</p>
+                  <h3 class="title">{{deviceData.load}} %</h3>
+              </div>
+              <div class="card-footer">
+                  <div class="stats">
+                      <i class="material-icons">date_range</i> Last 24 Hours
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-lg-3 col-md-6 col-sm-6">
+          <div class="card card-stats" >
+              <div class="card-header" data-background-color="green">
+                  <i class="material-icons">store</i>
+              </div>
+              <div class="card-content">
+                  <p class="category">power</p>
+                  <h3 class="title">{{deviceData.power}} %</h3>
+              </div>
+              <div class="card-footer">
+                  <div class="stats">
+                      <i class="material-icons">date_range</i> Last 24 Hours
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-lg-3 col-md-6 col-sm-6">
+          <div class="card card-stats" >
+              <div class="card-header" data-background-color="green">
+                  <i class="material-icons">store</i>
+              </div>
+              <div class="card-content">
+                  <p class="category">Speed RPM</p>
+                  <h3 class="title">{{deviceData.speed_rpm}} %</h3>
+              </div>
+              <div class="card-footer">
+                  <div class="stats">
+                      <i class="material-icons">date_range</i> Last 24 Hours
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-lg-3 col-md-6 col-sm-6">
+          <div class="card card-stats" >
+              <div class="card-header" data-background-color="green">
+                  <i class="material-icons">store</i>
+              </div>
+              <div class="card-content">
+                  <p class="category">Temperature</p>
+                  <h3 class="title">{{deviceData.temperature}} %</h3>
+              </div>
+              <div class="card-footer">
+                  <div class="stats">
+                      <i class="material-icons">date_range</i> Last 24 Hours
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-lg-3 col-md-6 col-sm-6">
+          <div class="card card-stats" >
+              <div class="card-header" data-background-color="green">
+                  <i class="material-icons">store</i>
+              </div>
+              <div class="card-content">
+                  <p class="category">voltage</p>
+                  <h3 class="title">{{deviceData.voltage}} %</h3>
+              </div>
+              <div class="card-footer">
+                  <div class="stats">
+                      <i class="material-icons">date_range</i> Last 24 Hours
+                  </div>
+              </div>
+          </div>
+      </div>
+
+    </div>
+
+    <div class="row">
+      <div class="col-lg-6 col-md-12">
+        <div class="card">
+          <div class="card-header" data-background-color="orange">
+            <h4 class="title">Employees Stats</h4>
+            <p class="category">New employees on 15th September, 2016</p>
+          </div>
+          <div class="card-content table-responsive">
+            <table class="table table-hover">
+              <thead class="text-warning">
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Salary</th>
+                  <th>Country</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>Dakota Rice</td>
+                  <td>$36,738</td>
+                  <td>Niger</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>Minerva Hooper</td>
+                  <td>$23,789</td>
+                  <td>Curaçao</td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>Sage Rodriguez</td>
+                  <td>$56,142</td>
+                  <td>Netherlands</td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td>Philip Chaney</td>
+                  <td>$38,735</td>
+                  <td>Korea, South</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

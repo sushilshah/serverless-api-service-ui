@@ -58,7 +58,7 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  goToDeviceDetails(param){
-    this.router.navigate(["device-details", param]);
+  goToDeviceDetails(deviceId) {
+    this.router.navigate(['device-details', deviceId]);
   }
 }

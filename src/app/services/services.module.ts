@@ -27,8 +27,8 @@ export class ServicesModule {
     });
   }
 
-    getDevice() {
-    return this.http.get( 'https://gzohp9nx5g.execute-api.ap-southeast-2.amazonaws.com/dev/devices')
+    getDevice(deviceId) {
+    return this.http.get( 'https://gzohp9nx5g.execute-api.ap-southeast-2.amazonaws.com/dev/devices/' + deviceId )
     .map(
       (response: Response) => response.json()
   );
