@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-// import { NgxEchartsModule } from 'ngx-echarts';
 import { ServicesModule } from '../../services/services.module';
 import {ActivatedRoute, Params} from '@angular/router';
+
+
+// import { AngularModuleEcharts } from 'ngx-echarts';
 
 @Component({
   selector: 'app-device-details',
