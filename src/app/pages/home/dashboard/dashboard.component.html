@@ -176,7 +176,7 @@
                                             </tr>
                                         </thead>
                                     <tbody>
-                                        <tr *ngFor="let transfer of devices" [routerLink]="['/transfer']" [queryParams]="{ id: transfer.id }">
+                                        <tr *ngFor="let transfer of devices" (click) = "goToDeviceDetails(transfer.id)">
                                             <td>{{transfer.id}}</td>
                                             <td>{{transfer.name}}</td>
                                             <td>{{transfer.alerts | json}}</td>

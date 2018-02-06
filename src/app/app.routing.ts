@@ -6,6 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { SignupComponent } from './pages/signup/signup.component';
+import { DeviceDetailsComponent } from 'app/pages/device-details/device-details.component';
 // import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 
@@ -15,6 +16,7 @@ const routes: Routes =[
       { path: 'signup',    component: SignupComponent },
       { path: '',          redirectTo: 'home', pathMatch: 'full' },
       // { path: '**',        component: NotFoundComponent },
+      { path: 'device-details/:param',     component: DeviceDetailsComponent},
 ];
 
 @NgModule({

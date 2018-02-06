@@ -30,8 +30,7 @@ export class DashboardComponent implements OnInit {
 
 
   constructor(private http: Http,
-  private router: Router) {
-}
+    private router: Router) {}
 
   ngOnInit() {
     require('../../../../assets/js/charts.js')();
@@ -57,5 +56,9 @@ export class DashboardComponent implements OnInit {
     }, err => {
         console.log(err);
     });
+  }
+
+  goToDeviceDetails(param){
+    this.router.navigate(["device-details", param]);
   }
 }

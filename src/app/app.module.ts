@@ -9,6 +9,8 @@ import { PagesModule } from './pages/pages.module';
 
 import { AppComponent } from './app.component';
 
+import { NgxEchartsModule } from 'ngx-echarts';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -18,8 +20,9 @@ import { AppComponent } from './app.component';
     FormsModule,
     HttpModule,
     RouterModule,
-
+    
     AppRoutingModule,
+    NgxEchartsModule,
     PagesModule,
   ],
   providers: [],
