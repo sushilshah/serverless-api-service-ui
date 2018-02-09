@@ -10,34 +10,34 @@ import { Http, Response } from '@angular/http';
   declarations: []
 })
 export class ServicesModule {
- 
+
   deviceCount: number;
   devices: any;
 
-  constructor(private http: Http) {}
-  
-    getUserCount() {
-    this.http.get( 'https://gzohp9nx5g.execute-api.ap-southeast-2.amazonaws.com/dev/devices')
-    .subscribe(data => {
+  constructor(private http: Http) { }
+
+  getUserCount() {
+    this.http.get('https://gzohp9nx5g.execute-api.ap-southeast-2.amazonaws.com/dev/devices')
+      .subscribe(data => {
         let response = data.json();
         this.deviceCount = response.length;
         this.devices = response;
-    }, err => {
+      }, err => {
         console.log(err);
-    });
+      });
   }
 
-    getDevice(deviceId) {
-    return this.http.get( 'https://gzohp9nx5g.execute-api.ap-southeast-2.amazonaws.com/dev/devices/' + deviceId )
-    .map(
+  getDevice(deviceId) {
+    return this.http.get('https://gzohp9nx5g.execute-api.ap-southeast-2.amazonaws.com/dev/devices/' + deviceId)
+      .map(
       (response: Response) => response.json()
       );
-    }
+  }
   getDeviceReadings(deviceId) {
-    return this.http.get( 'https://gzohp9nx5g.execute-api.ap-southeast-2.amazonaws.com/dev/devices/' + deviceId )
-    .map(
+    return this.http.get('https://gzohp9nx5g.execute-api.ap-southeast-2.amazonaws.com/dev/devices/' + deviceId + '/readings')
+      .map(
       (response: Response) => response.json()
-  );
+      );
     // .subscribe(data => {
     //     let response = data.json();
     //     this.deviceCount = response.length;
@@ -47,4 +47,4 @@ export class ServicesModule {
     // });
   }
 
- }
+}
