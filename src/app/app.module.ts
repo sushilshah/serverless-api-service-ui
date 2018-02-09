@@ -9,7 +9,8 @@ import { PagesModule } from './pages/pages.module';
 
 import { AppComponent } from './app.component';
 
-import { NgxEchartsModule } from 'ngx-echarts';
+// import { NgxEchartsModule } from 'ngx-echarts';
+import {AngularEchartsModule} from 'ngx-echarts';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,7 @@ import { NgxEchartsModule } from 'ngx-echarts';
     RouterModule,
     
     AppRoutingModule,
-    NgxEchartsModule,
+    AngularEchartsModule,
     PagesModule,
   ],
   providers: [],

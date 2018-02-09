@@ -31,8 +31,13 @@ export class ServicesModule {
     return this.http.get( 'https://gzohp9nx5g.execute-api.ap-southeast-2.amazonaws.com/dev/devices/' + deviceId )
     .map(
       (response: Response) => response.json()
+      );
+    }
+  getDeviceReadings(deviceId) {
+    return this.http.get( 'https://gzohp9nx5g.execute-api.ap-southeast-2.amazonaws.com/dev/devices/' + deviceId )
+    .map(
+      (response: Response) => response.json()
   );
-
     // .subscribe(data => {
     //     let response = data.json();
     //     this.deviceCount = response.length;
