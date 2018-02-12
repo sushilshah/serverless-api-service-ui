@@ -8,7 +8,7 @@ import 'rxjs/add/operator/map';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
+  
   data: any = null;
   constructor(private _http: Http) { 
     this.getMyBlog();

@@ -78,6 +78,7 @@ export class DeviceDetailsComponent implements OnInit {
         return str.replace('2009/', '');
     });
 
+
     chartOption = {
         title: {
             text: 'Rainfall flow diagram',
@@ -266,9 +267,119 @@ export class DeviceDetailsComponent implements OnInit {
                 data: [820, 932, 901, 934, 1290, 1330, 1320]
             }
         ]
-    }
+    };
 
-
+    newTimeData: any;
+    newChartOption: any;
+    _newChartOption = {
+        title: {
+            text: 'Sensor Readings',
+            subtext: 'Data from sensor 1 and sensor 2',
+            x: 'center'
+        },
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                animation: false
+            }
+        },
+        legend: {
+            data: ['s1', ' s2'],
+            x: 'left'
+        },
+        toolbox: {
+            feature: {
+                dataZoom: {
+                    yAxisIndex: 'none'
+                },
+                restore: {},
+                saveAsImage: {}
+            }
+        },
+        axisPointer: {
+            link: { xAxisIndex: 'all' }
+        },
+        dataZoom: [
+            {
+                show: true,
+                realtime: true,
+                start: 30,
+                end: 70,
+                xAxisIndex: [0, 1]
+            },
+            {
+                type: 'inside',
+                realtime: true,
+                start: 30,
+                end: 70,
+                xAxisIndex: [0, 1]
+            }
+        ],
+        grid: [{
+            left: 50,
+            right: 50,
+            height: '35%'
+        }, {
+            left: 50,
+            right: 50,
+            top: '55%',
+            height: '35%'
+        }],
+        xAxis: [
+            {
+                type: 'category',
+                boundaryGap: false,
+                axisLine: { onZero: true },
+                data: this.newTimeData
+            },
+            {
+                gridIndex: 1,
+                type: 'category',
+                boundaryGap: false,
+                axisLine: { onZero: true },
+                data: this.newTimeData,
+                position: 'top'
+            }
+        ],
+        yAxis: [
+            {
+                name: 's1',
+                type: 'value',
+                max: 520,
+                min: 518
+            },
+            {
+                gridIndex: 1,
+                name: 's2',
+                type: 'value',
+                inverse: true,
+                max: 645,
+                min: 640
+            }
+        ],
+        series: [
+            {
+                name: 'floww',
+                type: 'line',
+                symbolSize: 8,
+                hoverAnimation: false,
+                data: [
+                    0.97, 0.96, 0.96, 0.95, 0.95, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.94, 0.93, 0.92, 0.91, 0.9, 0.89, 0.88, 0.87, 0.87, 0.86, 0.86, 0.86, 0.86, 0.86, 0.86, 0.86, 0.86, 0.86, 0.86, 0.86, 0.86, 0.86, 0.86, 0.86, 0.86, 0.86, 0.86, 0.86, 0.86, 0.86, 0.86, 0.86, 0.86, 0.86, 0.86, 0.87, 0.88, 0.9, 0.93, 0.96, 0.99, 1.03, 1.06, 1.1, 1.14, 1.17, 1.2, 1.23, 1.26, 1.29, 1.33, 1.36, 1.4, 1.43, 1.45, 1.48, 1.49, 1.51, 1.51, 1.5, 1.49, 1.47, 1.44, 1.41, 1.37, 1.34, 1.3, 1.27, 1.24, 1.22, 1.2, 1.19, 1.18, 1.16, 1.15, 1.14, 1.13, 1.12, 1.11, 1.11, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.09, 1.09
+                ]
+            },
+            {
+                name: 'RainfallR',
+                type: 'line',
+                xAxisIndex: 1,
+                yAxisIndex: 1,
+                symbolSize: 8,
+                hoverAnimation: false,
+                data: [
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.005, 0.017, 0.017, 0.017, 0.017, 0.011, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.021, 0.026, 0.03, 0.036, 0.036, 0.195, 0.221, 0.019, 0.013, 0.017, 0.03, 0.03, 0.03, 0.046, 0.045, 0.038, 0.084, 0.045, 0.045, 0.037, 0.034, 0.035, 0.036, 0.044, 0.052, 0.048, 0.109, 0.033, 0.029, 0.04, 0.042, 0.042, 0.042, 0.073, 0.076, 0.062, 0.066, 0.066, 0.075, 0.096, 0.128, 0.121, 0.128, 0.14, 0.226, 0.143, 0.097, 0.018, 0, 0, 0, 0, 0, 0.018, 0.047, 0.054, 0.054, 0.054, 0.036, 0.185, 0.009, 0.038, 0.061, 0.077, 0.091, 0.126, 0.69, 0.182, 0.349, 0.231, 0.146, 0.128, 0.167, 0.1, 0.075, 0.071, 0.071, 0.117, 0.01, 0.002, 0.002, 0, 0, 0
+                ]
+            }
+        ]
+    };
 
 
 
@@ -307,21 +418,28 @@ export class DeviceDetailsComponent implements OnInit {
                     });
                     console.log(updatedTimes);
                     this.timeData = updatedTimes;
+                    this.newTimeData = updatedTimes;
+                    this._newChartOption.xAxis[0].data = updatedTimes;
+                    this._newChartOption.xAxis[1].data = updatedTimes;
 
                     var s1reading = this.deviceReadings.map(function (reading) {
                         return Number(reading.s1);
                     });
                     console.log(s1reading);
                     this.chartOption.series[0].data = s1reading;
+                    this._newChartOption.series[0].data = s1reading;
 
                     var s2reading = this.deviceReadings.map(function (reading) {
                         return Number(reading.s2);
                     });
                     console.log(s2reading);
                     this.chartOption.series[1].data = s2reading;
+                    this._newChartOption.series[1].data = s2reading;
                     this.chartOption.title.text = "TODO: Need to get the service working";
-                    console.log(this.chartOption);
                     this.plotChart = this.chartOption;
+                    this.newChartOption = this._newChartOption;
+                    console.log("Plot chart value");
+                    console.log(this.newChartOption);
                 }, err => {
                     console.log('There is an error');
                     console.log(err);

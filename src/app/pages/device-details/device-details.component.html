@@ -241,7 +241,7 @@
                 <!-- <div class="card-header card-chart" >
         </div> -->
                 <div class="card-content">
-                    <div echarts [options]="plotChart" class="demo-chart"></div>
+                    <div echarts [options]="newChartOption" class="demo-chart" *ngIf="newChartOption"></div>
                     <h4 class="title">Sensors data</h4>
                     <p class="category">
                         <span class="text-success">
