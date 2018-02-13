@@ -359,7 +359,7 @@ export class DeviceDetailsComponent implements OnInit {
         ],
         series: [
             {
-                name: 'floww',
+                name: 's1',
                 type: 'line',
                 symbolSize: 8,
                 hoverAnimation: false,
@@ -368,7 +368,7 @@ export class DeviceDetailsComponent implements OnInit {
                 ]
             },
             {
-                name: 'RainfallR',
+                name: 's2',
                 type: 'line',
                 xAxisIndex: 1,
                 yAxisIndex: 1,
@@ -412,31 +412,31 @@ export class DeviceDetailsComponent implements OnInit {
             this.serviceModule.getDeviceReadings(params['deviceId']).
                 subscribe(data => {
                     this.deviceReadings = data;
-                    console.log(this.deviceReadings);
+                    // console.log(this.deviceReadings);
                     var updatedTimes = this.deviceReadings.map(function (reading) {
                         return reading.updated;
                     });
                     console.log(updatedTimes);
-                    this.timeData = updatedTimes;
-                    this.newTimeData = updatedTimes;
+                    // this.timeData = updatedTimes;
+                    // this.newTimeData = updatedTimes;
                     this._newChartOption.xAxis[0].data = updatedTimes;
                     this._newChartOption.xAxis[1].data = updatedTimes;
 
                     var s1reading = this.deviceReadings.map(function (reading) {
                         return Number(reading.s1);
                     });
-                    console.log(s1reading);
-                    this.chartOption.series[0].data = s1reading;
+                    // console.log(s1reading);
+                    // this.chartOption.series[0].data = s1reading;
                     this._newChartOption.series[0].data = s1reading;
 
                     var s2reading = this.deviceReadings.map(function (reading) {
                         return Number(reading.s2);
                     });
-                    console.log(s2reading);
-                    this.chartOption.series[1].data = s2reading;
+                    // console.log(s2reading);
+                    // this.chartOption.series[1].data = s2reading;
+                    // this.chartOption.title.text = "TODO: Need to get the service working";
+                    // this.plotChart = this.chartOption;
                     this._newChartOption.series[1].data = s2reading;
-                    this.chartOption.title.text = "TODO: Need to get the service working";
-                    this.plotChart = this.chartOption;
                     this.newChartOption = this._newChartOption;
                     console.log("Plot chart value");
                     console.log(this.newChartOption);
