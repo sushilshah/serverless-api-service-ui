@@ -11,6 +11,7 @@ import { AppComponent } from './app.component';
 
 // import { NgxEchartsModule } from 'ngx-echarts';
 import {AngularEchartsModule} from 'ngx-echarts';
+import { ComponentsModule } from 'app/components/components.module';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import {AngularEchartsModule} from 'ngx-echarts';
     AppRoutingModule,
     AngularEchartsModule,
     PagesModule,
+    ComponentsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

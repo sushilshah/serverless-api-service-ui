@@ -8,12 +8,19 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { DeviceDetailsComponent } from './device-details/device-details.component';
 import { ServicesModule } from 'app/services/services.module';
 import { AngularEchartsModule } from 'ngx-echarts';
+import { ComponentsModule } from 'app/components/components.module';
+
+import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
   imports: [
     CommonModule,
     HomeModule,
-    AngularEchartsModule
+    AngularEchartsModule,
+    ComponentsModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyBeMiufX0-7mpOnlyd0Q-vuLktyV4FMrOw'
+    })
   ],
   declarations: [
     LoginComponent, 

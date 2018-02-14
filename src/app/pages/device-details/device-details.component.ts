@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 // import { NgxEchartsModule } from 'ngx-echarts';
 import { ServicesModule } from '../../services/services.module';
 import { ActivatedRoute, Params } from '@angular/router';
-import { MapsComponent } from 'app/pages/home/maps/maps.component';
-
+// import { MapsComponent } from 'app/pages/home/maps/maps.component';
+// import { NavbarComponent } from 'app/components/navbar/navbar.component';
 
 declare function require(path: string): any;
-declare var google: any;
+// declare var google: any;
 
 @Component({
     selector: 'app-device-details',
@@ -16,7 +16,10 @@ declare var google: any;
 
 
 export class DeviceDetailsComponent implements OnInit {
-
+    // lat: number = 51.678418;
+    // lng: number = 7.809007;
+    lat: number;
+    lng: number;
 
     _timeData = [
         '2009/6/12 2:00', '2009/6/12 3:00', '2009/6/12 4:00', '2009/6/12 5:00', '2009/6/12 6:00', '2009/6/12 7:00', '2009/6/12 8:00', '2009/6/12 9:00', '2009/6/12 10:00', '2009/6/12 11:00', '2009/6/12 12:00', '2009/6/12 13:00', '2009/6/12 14:00', '2009/6/12 15:00', '2009/6/12 16:00', '2009/6/12 17:00', '2009/6/12 18:00', '2009/6/12 19:00', '2009/6/12 20:00', '2009/6/12 21:00', '2009/6/12 22:00', '2009/6/12 23:00',
@@ -404,6 +407,10 @@ export class DeviceDetailsComponent implements OnInit {
                 subscribe(data => {
                     this.deviceData = data;
                     console.log(this.deviceData);
+                    this.lat = parseFloat(data.coordinates.Latitude);
+                    this.lng = parseFloat(data.coordinates.Longitude);
+                    
+
                 }, err => {
                     console.log('There is an error');
                     console.log(err);
