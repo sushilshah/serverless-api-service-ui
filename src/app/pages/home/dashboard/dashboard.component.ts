@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Http } from '@angular/http';
+import { ServicesModule } from '../../../services/services.module';
 
 declare function require(path: string): any;
 
@@ -30,32 +31,39 @@ export class DashboardComponent implements OnInit {
 
 
   constructor(private http: Http,
-    private router: Router) {}
+    private router: Router,
+    private serviceModule: ServicesModule,
+    private activatedRoute: ActivatedRoute) {}
 
   ngOnInit() {
     require('../../../../assets/js/charts.js')();
-    this.getUserCount();
+    this.getDeviceList();
     this.getAlertCount();
   }
 
-  getUserCount() {
-    this.http.get( 'https://gzohp9nx5g.execute-api.ap-southeast-2.amazonaws.com/dev/devices')
-    .subscribe(data => {
-        let response = data.json();
+  getDeviceList() {
+    this.serviceModule.getDeviceList().
+    subscribe(data => {
+        let response = data;
         this.deviceCount = response.length;
         this.devices = response;
     }, err => {
         console.log(err);
     });
   }
+  
   getAlertCount() {
-    this.http.get( 'https://gzohp9nx5g.execute-api.ap-southeast-2.amazonaws.com/dev/alerts')
-    .subscribe(data => {
-        let response = data.json();
-        this.alertCount = response.length;
-    }, err => {
-        console.log(err);
+    this.serviceModule.getAlerts().
+    subscribe(data => {
+        this.alertCount = data.length;
     });
+    // this.http.get( 'https://gzohp9nx5g.execute-api.ap-southeast-2.amazonaws.com/dev/alerts')
+    // .subscribe(data => {
+    //     let response = data.json();
+    //     this.alertCount = response.length;
+    // }, err => {
+    //     console.log(err);
+    // });
   }
 
   goToDeviceDetails(deviceId) {

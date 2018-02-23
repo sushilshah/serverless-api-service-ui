@@ -13,11 +13,12 @@ export class ServicesModule {
 
   deviceCount: number;
   devices: any;
-
+  awsHost = 'https://25ggnyf2vk.execute-api.ap-southeast-2.amazonaws.com/dev'; 
+  // https://25ggnyf2vk.execute-api.ap-southeast-2.amazonaws.com/dev/devices
   constructor(private http: Http) { }
 
   getUserCount() {
-    this.http.get('https://gzohp9nx5g.execute-api.ap-southeast-2.amazonaws.com/dev/devices')
+    this.http.get(this.awsHost + '/devices')
       .subscribe(data => {
         let response = data.json();
         this.deviceCount = response.length;
@@ -27,14 +28,21 @@ export class ServicesModule {
       });
   }
 
+  getDeviceList() {
+    return this.http.get(this.awsHost + '/devices')
+      .map(
+        (response: Response) => response.json()
+      );
+  }
+
   getDevice(deviceId) {
-    return this.http.get('https://gzohp9nx5g.execute-api.ap-southeast-2.amazonaws.com/dev/devices/' + deviceId)
+    return this.http.get(this.awsHost + '/devices/' + deviceId)
       .map(
       (response: Response) => response.json()
       );
   }
   getDeviceReadings(deviceId) {
-    return this.http.get('https://gzohp9nx5g.execute-api.ap-southeast-2.amazonaws.com/dev/devices/' + deviceId + '/readings')
+    return this.http.get(this.awsHost + '/devices/' + deviceId + '/readings')
       .map(
       (response: Response) => response.json()
       );
@@ -45,6 +53,13 @@ export class ServicesModule {
     // }, err => {
     //     console.log(err);
     // });
+  }
+
+  getAlerts() {
+    return this.http.get(this.awsHost + '/alerts/')
+      .map(
+      (response: Response) => response.json()
+      );
   }
 
 }
