@@ -62,4 +62,11 @@ export class ServicesModule {
       );
   }
 
+  postDevice(data){
+    console.log("postDEvice with data %s", data);
+    return this.http.get(this.awsHost + '/alerts/')
+      .map(
+      (response: Response) => response.json()
+      );
+  }
 }
