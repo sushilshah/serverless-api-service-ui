@@ -1,0 +1,267 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Om Namah Shivya</title>
+  <base href="/">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <!--     Fonts and icons     -->
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css'>
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel='stylesheet'>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <!--  Google Maps Plugin    -->
+
+</head>
+<style>
+  body {
+    text-align: center;
+  }
+
+  .wrapper {
+    display: table;
+    width: 100%;
+    height: 100vh;
+  }
+
+  .inner {
+    display: table-cell;
+    vertical-align: middle;
+  }
+
+  ul {
+    list-style-type: none;
+    margin: 0;
+  }
+
+  * {
+    font-size: 24px;
+  }
+
+  span {
+    display: inline-block;
+    width: 100px;
+    color: green;
+  }
+
+  .groove {
+    display: inline-block;
+    width: 400px;
+    height: 50px;
+    background: teal;
+    position: relative;
+  }
+
+  .ball {
+    display: block;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: white;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    margin-left: -25px;
+  }
+</style>
+
+<script>
+  var acceleration;
+  var alpha;
+  var beta;
+  var gamma;
+
+  window.addEventListener("deviceorientation", handleOrientation, true);
+
+  function handleOrientation(event) {
+    var absolute = event.absolute;
+    var alpha = event.alpha;
+    this.alpha = event.alpha;
+    var beta = event.beta;
+    this.beta = event.beta;
+    var gamma = event.gamma;
+    this.gamma = event.gamma;
+    var ballPos = (gamma / 90) * 200;
+    console.log(event);
+    $('.absolute').html(absolute);
+    $('.alpha').html(alpha.toFixed(3));
+    $('.beta').html(beta.toFixed(3));
+    $('.gamma').html(gamma.toFixed(3));
+    $('.ball').css('transform', 'translateX(' + ballPos + 'px)');
+
+  }
+
+  window.addEventListener("devicemotion", handleMotion, true);
+
+  function handleMotion(event) {
+    var acceleration = event.acceleration;
+    this.acceleration = event.acceleration;
+    var interval = event.interval;
+    if (acceleration.x) {
+      $('.accelerationx').html(acceleration.x.toFixed(3));
+      $('.accelerationy').html(acceleration.y.toFixed(3));
+      $('.accelerationz').html(acceleration.z.toFixed(3));
+      $('.interval').html(interval);
+
+    }
+  }
+
+  $(document).ready(function () {
+    $('#txt_id').val("om");
+    var awsHost = 'https://25ggnyf2vk.execute-api.ap-southeast-2.amazonaws.com/dev/devices';
+    $(".btn").on('click', function () {
+      console.log("Click event");
+      // alert("Data: " + acceleration.x + "\nStatus: " + acceleration.y + " ff " + acceleration.z
+      //   + "\nAlpha : " + alpha + " Beta: " + beta + " gamma " + gamma);
+      // $.get(awsHost, function(data, status){
+      //   console.log("Data: " + data + "\nStatus: " + status);
+      // });
+      // $.post( "test.php", $( "#testform" ).serialize() );
+      var payload = {
+        x: acceleration.x, y: acceleration.y, z: acceleration.z,
+        alpha: alpha, beta: beta, gamma: gamma
+      };
+      var posting = $.post(awsHost, payload, dataType = "application/json; charset=utf-8");
+      posting.done(function (data) {
+        // var content = $( data ).find( "#content" );
+        console.log(data);
+        $("#result").html(JSON.stringify(data).slice(1, 100));
+      });
+    });
+
+    $(".send").on('click', function () {
+      data = JSON.stringify({ data: "test" });
+      var deviceId = $('#txt_id').val();
+      var payload = {
+        id: deviceId, x: acceleration.x, y: acceleration.y,
+        z: acceleration.z, alpha: alpha, beta: beta, gamma: gamma
+      };
+      data = JSON.stringify(payload);
+      $.ajax({
+        url: awsHost,
+        type: "POST",
+        data: data,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function () {
+          console.log("success output");
+        }
+      })
+        .done(function (data) {
+          if (console && console.log) {
+            console.log("Sample of data:", data.slice(0, 100));
+            $("#result").html(JSON.stringify(data));
+          }
+        });
+    });
+
+  });
+</script>
+
+<body>
+  <p>Device orientation and motion test for devices with acceleromters</p>
+
+  <div id="result" class="row">Placeholder </div>
+  <!-- <div class="wrapper">
+    <div class="inner">
+      <div class="groove">
+        <div class="ball"></div>
+      </div>
+      <ul>
+        <li>Absolute:
+          <span class="absolute"></span>
+        </li>
+        <li>Alpha:
+          <span class="alpha"></span>
+        </li>
+        <li>Beta:
+          <span class="beta"></span>
+        </li>
+        <li>Gamma:
+          <span class="gamma"></span>
+        </li>
+        <li>Acceleration X:
+          <span class="accelerationx"></span>
+        </li>
+        <li>Acceleration Y:
+          <span class="accelerationy"></span>
+        </li>
+        <li>Acceleration Z:
+          <span class="accelerationz"></span>
+        </li>
+        <li>Interval:
+          <span class="interval"></span>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <button class="btn">Post Data</button>
+  <button class="send">Send Data</button> -->
+
+
+  <div class="wrapper">
+    <div class="main-panel device-details">
+      <div class="main-content">
+        <div class="container-fluid">
+          <div class="row">
+
+            <div class="col-lg-3 col-md-6 col-sm-6">
+              <div class="card card-stats">
+                <div class="card-header" data-background-color="orange">
+                  <!-- <i class="material-icons">content_copy</i> -->
+                </div>
+                <div class="card-content">
+                  <div class="groove">
+                    <div class="ball"></div>
+                  </div>
+                  <ul>
+                    <li>
+                      <input id="txt_id" />
+                    </li>
+                    <li>Absolute:
+                      <span class="absolute"></span>
+                    </li>
+                    <li>Alpha:
+                      <span class="alpha"></span>
+                    </li>
+                    <li>Beta:
+                      <span class="beta"></span>
+                    </li>
+                    <li>Gamma:
+                      <span class="gamma"></span>
+                    </li>
+                    <li>Acceleration X:
+                      <span class="accelerationx"></span>
+                    </li>
+                    <li>Acceleration Y:
+                      <span class="accelerationy"></span>
+                    </li>
+                    <li>Acceleration Z:
+                      <span class="accelerationz"></span>
+                    </li>
+                    <li>Interval:
+                      <span class="interval"></span>
+                    </li>
+                  </ul>
+                  <!-- <p class="category">{{deviceData.name}}</p> -->
+
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="btn">Post Data</button>
+    <button class="send">Send Data</button>
+  </div>
+
+</body>
+
+</html>
