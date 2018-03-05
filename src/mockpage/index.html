@@ -158,7 +158,7 @@
         .done(function (data) {
           if (console && console.log) {
             console.log("Sample of data:", data);
-            $("#result").html(JSON.stringify(data));
+            // $("#result").html(JSON.stringify(data));
           }
         });
     }
@@ -193,6 +193,7 @@
       if(startSendingReadings){
         count++;
         console.log("setInterval every now and then %s", count);
+        $("#result").html("Sending data count:" + count);
         postData();
       }
     };
