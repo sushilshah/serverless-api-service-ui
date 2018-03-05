@@ -424,15 +424,13 @@ export class DeviceDetailsComponent implements OnInit {
 
             this.serviceModule.getDeviceReadings(params['deviceId']).
                 subscribe(data => {
-                    
-                    
                     // console.log("Device readings");
                     // console.log(data);
                     this.deviceReadings = data;
                     //Combined map fun
+                    let readingObj = {};
                     let readings = this.deviceReadings.map(function (reading) {
-                        let readingObj = {};
-                     
+                        readingObj = {};
                         if (reading && reading.x && reading.y && reading.updated) {
                             readingObj['x'] = reading.x;
                             readingObj['y'] = reading.y;
@@ -451,83 +449,40 @@ export class DeviceDetailsComponent implements OnInit {
                     readings.sort(function(a, b) {
                         return a['updated'] - b['updated'];
                     });
-                    var newReadings = readings
+                    let newReadings = readings
                                 .filter(reading => reading)
                                 .map(reading => reading);
                     console.log("newReadings");
                     console.log(newReadings);
-                    let xReadings = newReadings.map(reading => Number(reading.x));
-                    let yReadings = newReadings.map(reading => Number(reading.y));
-                    let updatedList = newReadings.map(reading => Number(reading.updated));
-                    console.log(xReadings);
-                    console.log(yReadings);
-                    console.log(updatedList);
+                    const xReadings = newReadings.map(reading => Number(reading.x));
+                    const yReadings = newReadings.map(reading => Number(reading.y));
+                    const updatedList = newReadings.map(reading => Number(reading.updated));
+                    // console.log(xReadings);
+                    // console.log(yReadings);
+                    // console.log(updatedList);
                     
-                    let xmin = Math.min.apply(null, xReadings),
+                    const xmin = Math.min.apply(null, xReadings),
                     xmax = Math.max.apply(null, xReadings);
-                    console.log('X MIN MAX::' , xmin, xmax);
-                    let ymin = Math.min.apply(null, yReadings),
+                    // console.log('X MIN MAX::' , xmin, xmax);
+                    const ymin = Math.min.apply(null, yReadings),
                     ymax = Math.max.apply(null, yReadings);
-                    console.log('Y MIN MAX::' , ymin, ymax);
-                    // let _updatedTimes = readings.map(function(reading){
-                    //     return reading.updated;
-                    // });
-                    // console.log(this.deviceReadings);
-                    let updatedTimes = this.deviceReadings.map(function (reading) {
+                    // console.log('Y MIN MAX::' , ymin, ymax);
+                    const updatedTimes = this.deviceReadings.map(function (reading) {
                         return reading.updated;
                     });
   
                     this._newChartOption.xAxis[0].data = updatedList;
-                    this._newChartOption.xAxis[0].data = updatedList;
-                    // this._newChartOption.xAxis[1].data = updatedTimes;
                     this._newChartOption.series[0].data = xReadings;
                     this._newChartOption.yAxis[0].min = xmin;
                     this._newChartOption.yAxis[0].max = xmax;
                     
-                    // this._newChartOption.xAxis[1].data = updatedTimes;
+                    this._newChartOption.xAxis[1].data = updatedList;
                     this._newChartOption.series[1].data = yReadings;
                     this._newChartOption.yAxis[1].min = ymin;
                     this._newChartOption.yAxis[1].max = ymax;
-                    // this._newChartOption.yAxis[1].min = ymin;
-                    // this._newChartOption.yAxis[1].max = ymax;
                     this.newChartOption = this._newChartOption;
-                    
-                    // readings.sort(function (a, b) {
-                    //     // return a.name.localeCompare(b.name);
-                    //     return a.updated.localeCompare(b.updated);
-                    // });
-                    
-
-                    // let xReadings: any = readings.map(function(reading){
-                    //     if(reading.x){
-                    //         return reading.x;
-                    //     }
-                    // });
-
-                    // let yReadings = readings.map(function(reading){
-                    //     return reading.y;
-                    // });
-                    let s1reading = this.deviceReadings.map(function (reading) {
-                        // return Number(reading.s1);
-                        // console.log("Map fun ");
-                        // console.log(reading);
-                        return Number(reading.x);
-                    });
-                    // console.log(s1reading);
-                    // this.chartOption.series[0].data = s1reading;
-                    this._newChartOption.series[0].data = s1reading;
-
-                    let s2reading = this.deviceReadings.map(function (reading) {
-                        return Number(reading.y);
-                    });
-                    // console.log(s2reading);
-                    // this.chartOption.series[1].data = s2reading;
-                    // this.chartOption.title.text = "TODO: Need to get the service working";
-                    // this.plotChart = this.chartOption;
-                    this._newChartOption.series[1].data = s2reading;
-                    // this.newChartOption = this._newChartOption;
-                    // console.log("Plot chart value");
-                    // console.log(this.newChartOption);
+                    console.log("Plot chart value");
+                    console.log(this.newChartOption);
                 }, err => {
                     console.log('There is an error');
                     console.log(err);
