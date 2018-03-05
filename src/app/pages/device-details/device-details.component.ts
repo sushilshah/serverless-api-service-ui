@@ -349,17 +349,14 @@ export class DeviceDetailsComponent implements OnInit {
         yAxis: [
             {
                 name: 's1',
-                type: 'value',
-                max: 520,
-                min: 518
+                type: 'value'
+              
             },
             {
                 gridIndex: 1,
                 name: 's2',
                 type: 'value',
-                inverse: true,
-                max: 645,
-                min: 640
+                inverse: true
             }
         ],
         series: [
@@ -385,7 +382,67 @@ export class DeviceDetailsComponent implements OnInit {
             }
         ]
     };
+    
+    stackedChart: any;
 
+    _stackedChart = {
+        title: {
+            text: 'Plot'
+        },
+        tooltip: {
+            trigger: 'axis'
+        },
+        legend: {
+            data:['X','Y','Z']
+        },
+         dataZoom: [
+                {
+                    show: true,
+                    realtime: true,
+                    start: 30,
+                    end: 70
+                },
+                {
+                    type: 'inside'
+                }
+            ],
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        toolbox: {
+            feature: {
+                saveAsImage: {}
+            }
+        },
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: ['1','2','3','4','5','6','7']
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [
+            {
+                name:'X',
+                type:'line',
+                data:[120, 132, 101, 134, 90, 230, 210]
+            },
+            {
+                name:'Y',
+                type:'line',
+                data:[220, 182, 191, 234, 290, 330, 310]
+            },
+            {
+                name:'Z',
+                type:'line',
+                data:[150, 232, 201, 154, 190, 330, 410]
+            }
+        ]
+    };
 
 
     deviceData: any;
@@ -434,6 +491,7 @@ export class DeviceDetailsComponent implements OnInit {
                         if (reading && reading.x && reading.y && reading.updated) {
                             readingObj['x'] = reading.x;
                             readingObj['y'] = reading.y;
+                            readingObj['z'] = reading.z;
                             readingObj['updated'] = reading.updated;
                             // console.log(reading);
                             return readingObj;
@@ -456,16 +514,14 @@ export class DeviceDetailsComponent implements OnInit {
                     console.log(newReadings);
                     const xReadings = newReadings.map(reading => Number(reading.x));
                     const yReadings = newReadings.map(reading => Number(reading.y));
+                    const zReadings = newReadings.map(reading => Number(reading.z));
                     const updatedList = newReadings.map(reading => Number(reading.updated));
-                    // console.log(xReadings);
-                    // console.log(yReadings);
-                    // console.log(updatedList);
                     
-                    const xmin = Math.min.apply(null, xReadings),
-                    xmax = Math.max.apply(null, xReadings);
+                    // const xmin = Math.min.apply(null, xReadings),
+                    // xmax = Math.max.apply(null, xReadings);
                     // console.log('X MIN MAX::' , xmin, xmax);
-                    const ymin = Math.min.apply(null, yReadings),
-                    ymax = Math.max.apply(null, yReadings);
+                    // const ymin = Math.min.apply(null, yReadings),
+                    // ymax = Math.max.apply(null, yReadings);
                     // console.log('Y MIN MAX::' , ymin, ymax);
                     const updatedTimes = this.deviceReadings.map(function (reading) {
                         return reading.updated;
@@ -473,14 +529,22 @@ export class DeviceDetailsComponent implements OnInit {
   
                     this._newChartOption.xAxis[0].data = updatedList;
                     this._newChartOption.series[0].data = xReadings;
-                    this._newChartOption.yAxis[0].min = xmin;
-                    this._newChartOption.yAxis[0].max = xmax;
+                    // this._newChartOption.yAxis[0].min = xmin;
+                    // this._newChartOption.yAxis[0].max = xmax;
                     
                     this._newChartOption.xAxis[1].data = updatedList;
                     this._newChartOption.series[1].data = yReadings;
-                    this._newChartOption.yAxis[1].min = ymin;
-                    this._newChartOption.yAxis[1].max = ymax;
+                    // this._newChartOption.yAxis[1].min = ymin;
+                    // this._newChartOption.yAxis[1].max = ymax;
                     this.newChartOption = this._newChartOption;
+                    
+                    this._stackedChart.xAxis.data = updatedList;
+                    this._stackedChart.series[0].data = xReadings;
+                    this._stackedChart.series[1].data = yReadings;
+                    this._stackedChart.series[2].data = zReadings;
+                    this.stackedChart = this._stackedChart;
+                    // this.stackedChart.series[2].data = zReadings;
+
                     console.log("Plot chart value");
                     console.log(this.newChartOption);
                 }, err => {
