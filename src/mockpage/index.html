@@ -112,29 +112,30 @@
   }
 
   $(document).ready(function () {
-    $('#txt_id').val("om");
+    $('#txt_id').val("OM");
     var awsHost = 'https://25ggnyf2vk.execute-api.ap-southeast-2.amazonaws.com/dev/devices';
-    $(".btn").on('click', function () {
-      console.log("Click event");
-      // alert("Data: " + acceleration.x + "\nStatus: " + acceleration.y + " ff " + acceleration.z
-      //   + "\nAlpha : " + alpha + " Beta: " + beta + " gamma " + gamma);
-      // $.get(awsHost, function(data, status){
-      //   console.log("Data: " + data + "\nStatus: " + status);
-      // });
-      // $.post( "test.php", $( "#testform" ).serialize() );
-      var payload = {
-        x: acceleration.x, y: acceleration.y, z: acceleration.z,
-        alpha: alpha, beta: beta, gamma: gamma
-      };
-      var posting = $.post(awsHost, payload, dataType = "application/json; charset=utf-8");
-      posting.done(function (data) {
-        // var content = $( data ).find( "#content" );
-        console.log(data);
-        $("#result").html(JSON.stringify(data).slice(1, 100));
-      });
-    });
-
-    $(".send").on('click', function () {
+    
+    // $(".btn").on('click', function () {
+    //   console.log("Click event");
+    //   // alert("Data: " + acceleration.x + "\nStatus: " + acceleration.y + " ff " + acceleration.z
+    //   //   + "\nAlpha : " + alpha + " Beta: " + beta + " gamma " + gamma);
+    //   // $.get(awsHost, function(data, status){
+    //   //   console.log("Data: " + data + "\nStatus: " + status);
+    //   // });
+    //   // $.post( "test.php", $( "#testform" ).serialize() );
+    //   var payload = {
+    //     x: acceleration.x, y: acceleration.y, z: acceleration.z,
+    //     alpha: alpha, beta: beta, gamma: gamma
+    //   };
+    //   var posting = $.post(awsHost, payload, dataType = "application/json; charset=utf-8");
+    //   posting.done(function (data) {
+    //     // var content = $( data ).find( "#content" );
+    //     console.log(data);
+    //     $("#result").html(JSON.stringify(data).slice(1, 100));
+    //   });
+    // });
+      
+    function postData(){
       data = JSON.stringify({ data: "test" });
       var deviceId = $('#txt_id').val();
       var payload = {
@@ -142,6 +143,8 @@
         z: acceleration.z, alpha: alpha, beta: beta, gamma: gamma
       };
       data = JSON.stringify(payload);
+      console.log("Posting generated data");
+      console.log(data);
       $.ajax({
         url: awsHost,
         type: "POST",
@@ -154,11 +157,51 @@
       })
         .done(function (data) {
           if (console && console.log) {
-            console.log("Sample of data:", data.slice(0, 100));
+            console.log("Sample of data:", data);
             $("#result").html(JSON.stringify(data));
           }
         });
+    }
+
+    $(".send").on('click', function () {
+      postData();
     });
+    
+
+
+
+    var startSendingReadings = false;
+    var count = 0;
+
+    $(".startbtn").on('click', function () {
+      if(startSendingReadings){
+        // startbtn
+        $(".startbtn").html("Start Sending");
+        startSendingReadings = false;
+      }else{
+        $(".startbtn").html("Stop Sending");
+        postData();
+        startSendingReadings = true;
+        count = 0;
+      }
+      // startSendingReadings = startSendingReadings ? false: true;
+      // console.log("Click event");
+    });
+
+    var ajax_call = function() {
+      //your jQuery ajax code
+      if(startSendingReadings){
+        count++;
+        console.log("setInterval every now and then %s", count);
+        postData();
+      }
+    };
+    var X = 0.1;
+    var interval = 1000 * 60 * X; // where X is your every X minutes
+
+    setInterval(ajax_call, interval);
+
+
 
   });
 </script>
@@ -258,7 +301,7 @@
         </div>
       </div>
     </div>
-    <button class="btn">Post Data</button>
+    <button class="startbtn">Start Sending Data</button>
     <button class="send">Send Data</button>
   </div>
 
