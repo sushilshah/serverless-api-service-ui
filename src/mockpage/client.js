@@ -41,26 +41,6 @@ function handleMotion(event) {
 $(document).ready(function () {
   $('#txt_id').val("OM");
   var awsHost = 'https://25ggnyf2vk.execute-api.ap-southeast-2.amazonaws.com/dev/devices';
-  
-  // $(".btn").on('click', function () {
-  //   console.log("Click event");
-  //   // alert("Data: " + acceleration.x + "\nStatus: " + acceleration.y + " ff " + acceleration.z
-  //   //   + "\nAlpha : " + alpha + " Beta: " + beta + " gamma " + gamma);
-  //   // $.get(awsHost, function(data, status){
-  //   //   console.log("Data: " + data + "\nStatus: " + status);
-  //   // });
-  //   // $.post( "test.php", $( "#testform" ).serialize() );
-  //   var payload = {
-  //     x: acceleration.x, y: acceleration.y, z: acceleration.z,
-  //     alpha: alpha, beta: beta, gamma: gamma
-  //   };
-  //   var posting = $.post(awsHost, payload, dataType = "application/json; charset=utf-8");
-  //   posting.done(function (data) {
-  //     // var content = $( data ).find( "#content" );
-  //     console.log(data);
-  //     $("#result").html(JSON.stringify(data).slice(1, 100));
-  //   });
-  // });
     
   function postData(){
     data = JSON.stringify({ data: "test" });
@@ -111,8 +91,6 @@ $(document).ready(function () {
       startSendingReadings = true;
       count = 0;
     }
-    // startSendingReadings = startSendingReadings ? false: true;
-    // console.log("Click event");
   });
 
   var ajax_call = function() {
@@ -150,26 +128,6 @@ $(document).ready(function () {
   var interval = 1000 *  X; // where X is your every X minutes
 
   setInterval(sampleData, interval);
-//   var interval = 1000 * 60 * 0.6; // where X is your every X minutes
-//   var sampleData = function(){
-//     sampleCnt++;
-//     console.log("Cnt :: " + sampleCnt) ;
-//   }
-//   setInterval(sampleCnt, interval);
-
-// callfunction();
-  // var callCount = 1;
-  // var repeater = setInterval(function () {
-  //   if (callCount < 10) {
-  //     // callfunction();
-  //     console.log("Call count " + callCount);
-  //     callCount += 1;
-  //   } else {
-  //     clearInterval(repeater);
-  //   }
-  // }, 1000);
-  // callCount = 1;
-  
   
   // function alertMe() {
   //   setInterval(function(){
