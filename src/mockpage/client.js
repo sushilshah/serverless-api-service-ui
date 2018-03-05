@@ -42,16 +42,20 @@ $(document).ready(function () {
   $('#txt_id').val("OM");
   var awsHost = 'https://25ggnyf2vk.execute-api.ap-southeast-2.amazonaws.com/dev/devices';
     
-  function postData(){
-    data = JSON.stringify({ data: "test" });
+  function postData(payload){
+    // data = JSON.stringify({ data: "test" });
     var deviceId = $('#txt_id').val();
-    var payload = {
-      id: deviceId, x: acceleration.x, y: acceleration.y,
-      z: acceleration.z, alpha: alpha, beta: beta, gamma: gamma
-    };
+    if(!payload){
+        _payload = {
+          id: deviceId, x: acceleration.x, y: acceleration.y,
+          z: acceleration.z, alpha: alpha, beta: beta, gamma: gamma
+        };
+        payload = [];
+        payload.push(_payload);
+    }
     data = JSON.stringify(payload);
     console.log("Posting generated data");
-    console.log(data);
+    console.log(payload);
     $.ajax({
       url: awsHost,
       type: "POST",
@@ -87,7 +91,7 @@ $(document).ready(function () {
       startSendingReadings = false;
     }else{
       $(".startbtn").html("Stop Sending");
-      postData();
+    //   postData();
       startSendingReadings = true;
       count = 0;
     }
@@ -99,28 +103,45 @@ $(document).ready(function () {
       count++;
       console.log("setInterval every now and then %s", count);
       $("#result").html("Sending data count:" + count);
-      postData();
+    //   postData();
     }
   };
   var X = 0.1;
   var interval = 1000 * 60 * X; // where X is your every X minutes
 
-  setInterval(ajax_call, interval);
+//   setInterval(ajax_call, interval);
 
 /**
 * sample rate generates 100 messages per second 
 * (or a sampling rate of 100 Hz).
 * */
   var sampleCnt = 0;
+  var sampledData = [];
   var sampleData = function() {
     //your jQuery ajax code
     if (sampleCnt < 100) {
       sampleCnt++;
-      // console.log("ajax 1 sending :: " + sampleCnt);
+    //   console.log("ajax 1 sending :: " + sampleCnt);
+      var deviceId = $('#txt_id').val();
+      var date = new Date().getTime();
+      var payload = {
+        id: deviceId, x: acceleration.x, y: acceleration.y,
+        z: acceleration.z, alpha: alpha, beta: beta, gamma: gamma,
+        ts: date
+      };
+      sampledData.push(payload);
     }else{
-      console.log("reset counter");
-      sampleCnt = 0;
-      clearInterval();
+        if(startSendingReadings){
+            count++;
+            console.log("setInterval every now and then %s", count);
+            $("#result").html("Sending data count:" + count);
+            postData(sampledData);
+            console.log("send this data");
+            console.log(sampledData);
+        }
+        sampledData = [];
+        sampleCnt = 0;
+        clearInterval();
     }
     
   };
