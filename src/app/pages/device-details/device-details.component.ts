@@ -2,11 +2,13 @@ import { Component, OnInit } from '@angular/core';
 // import { NgxEchartsModule } from 'ngx-echarts';
 import { ServicesModule } from '../../services/services.module';
 import { ActivatedRoute, Params } from '@angular/router';
+import { removeDebugNodeFromIndex } from '@angular/core/src/debug/debug_node';
+// import { read } from 'fs';
 // import { MapsComponent } from 'app/pages/home/maps/maps.component';
 // import { NavbarComponent } from 'app/components/navbar/navbar.component';
 
 declare function require(path: string): any;
-// declare var google: any;
+// declare let google: any;
 
 @Component({
     selector: 'app-device-details',
@@ -406,10 +408,14 @@ export class DeviceDetailsComponent implements OnInit {
             this.serviceModule.getDevice(params['deviceId']).
                 subscribe(data => {
                     this.deviceData = data;
-                    console.log(this.deviceData);
-                    this.lat = parseFloat(data.coordinates.Latitude);
-                    this.lng = parseFloat(data.coordinates.Longitude);
-                    
+                    // console.log(this.deviceData);
+                    if(data.coordinates && data.coordinates.Latitude){
+                        this.lat = parseFloat(data.coordinates.Latitude);
+                    }
+                    if(data.coordinates && data.coordinates.Longitude){
+                        this.lng = parseFloat(data.coordinates.Longitude);
+                    }
+
 
                 }, err => {
                     console.log('There is an error');
@@ -418,35 +424,110 @@ export class DeviceDetailsComponent implements OnInit {
 
             this.serviceModule.getDeviceReadings(params['deviceId']).
                 subscribe(data => {
+                    
+                    
+                    // console.log("Device readings");
+                    // console.log(data);
                     this.deviceReadings = data;
+                    //Combined map fun
+                    let readings = this.deviceReadings.map(function (reading) {
+                        let readingObj = {};
+                     
+                        if (reading && reading.x && reading.y && reading.updated) {
+                            readingObj['x'] = reading.x;
+                            readingObj['y'] = reading.y;
+                            readingObj['updated'] = reading.updated;
+                            // console.log(reading);
+                            return readingObj;
+                        }
+                    });
+                    // console.log("Readings");
+                    // console.log(readings);
+                    // var userids = userbody.contacts
+                    // .filter(contact => contact.iAccepted == 'true' && contact.contactAccepted == 'true')
+                    /**
+                     * Sort Readings by updated Time
+                     * **/
+                    readings.sort(function(a, b) {
+                        return a['updated'] - b['updated'];
+                    });
+                    var newReadings = readings
+                                .filter(reading => reading)
+                                .map(reading => reading);
+                    console.log("newReadings");
+                    console.log(newReadings);
+                    let xReadings = newReadings.map(reading => Number(reading.x));
+                    let yReadings = newReadings.map(reading => Number(reading.y));
+                    let updatedList = newReadings.map(reading => Number(reading.updated));
+                    console.log(xReadings);
+                    console.log(yReadings);
+                    console.log(updatedList);
+                    
+                    let xmin = Math.min.apply(null, xReadings),
+                    xmax = Math.max.apply(null, xReadings);
+                    console.log('X MIN MAX::' , xmin, xmax);
+                    let ymin = Math.min.apply(null, yReadings),
+                    ymax = Math.max.apply(null, yReadings);
+                    console.log('Y MIN MAX::' , ymin, ymax);
+                    // let _updatedTimes = readings.map(function(reading){
+                    //     return reading.updated;
+                    // });
                     // console.log(this.deviceReadings);
-                    var updatedTimes = this.deviceReadings.map(function (reading) {
+                    let updatedTimes = this.deviceReadings.map(function (reading) {
                         return reading.updated;
                     });
-                    console.log(updatedTimes);
-                    // this.timeData = updatedTimes;
-                    // this.newTimeData = updatedTimes;
-                    this._newChartOption.xAxis[0].data = updatedTimes;
-                    this._newChartOption.xAxis[1].data = updatedTimes;
+  
+                    this._newChartOption.xAxis[0].data = updatedList;
+                    this._newChartOption.xAxis[0].data = updatedList;
+                    // this._newChartOption.xAxis[1].data = updatedTimes;
+                    this._newChartOption.series[0].data = xReadings;
+                    this._newChartOption.yAxis[0].min = xmin;
+                    this._newChartOption.yAxis[0].max = xmax;
+                    
+                    // this._newChartOption.xAxis[1].data = updatedTimes;
+                    this._newChartOption.series[1].data = yReadings;
+                    this._newChartOption.yAxis[1].min = ymin;
+                    this._newChartOption.yAxis[1].max = ymax;
+                    // this._newChartOption.yAxis[1].min = ymin;
+                    // this._newChartOption.yAxis[1].max = ymax;
+                    this.newChartOption = this._newChartOption;
+                    
+                    // readings.sort(function (a, b) {
+                    //     // return a.name.localeCompare(b.name);
+                    //     return a.updated.localeCompare(b.updated);
+                    // });
+                    
 
-                    var s1reading = this.deviceReadings.map(function (reading) {
-                        return Number(reading.s1);
+                    // let xReadings: any = readings.map(function(reading){
+                    //     if(reading.x){
+                    //         return reading.x;
+                    //     }
+                    // });
+
+                    // let yReadings = readings.map(function(reading){
+                    //     return reading.y;
+                    // });
+                    let s1reading = this.deviceReadings.map(function (reading) {
+                        // return Number(reading.s1);
+                        // console.log("Map fun ");
+                        // console.log(reading);
+                        return Number(reading.x);
                     });
                     // console.log(s1reading);
                     // this.chartOption.series[0].data = s1reading;
                     this._newChartOption.series[0].data = s1reading;
 
-                    var s2reading = this.deviceReadings.map(function (reading) {
-                        return Number(reading.s2);
+                    let s2reading = this.deviceReadings.map(function (reading) {
+                        return Number(reading.y);
                     });
                     // console.log(s2reading);
                     // this.chartOption.series[1].data = s2reading;
                     // this.chartOption.title.text = "TODO: Need to get the service working";
                     // this.plotChart = this.chartOption;
                     this._newChartOption.series[1].data = s2reading;
-                    this.newChartOption = this._newChartOption;
-                    console.log("Plot chart value");
-                    console.log(this.newChartOption);
+                    // this.newChartOption = this._newChartOption;
+                    // console.log("Plot chart value");
+                    // console.log(this.newChartOption);
                 }, err => {
                     console.log('There is an error');
                     console.log(err);
