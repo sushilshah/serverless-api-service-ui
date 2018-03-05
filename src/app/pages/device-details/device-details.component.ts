@@ -382,7 +382,7 @@ export class DeviceDetailsComponent implements OnInit {
             }
         ]
     };
-    
+
     stackedChart: any;
 
     _stackedChart = {
