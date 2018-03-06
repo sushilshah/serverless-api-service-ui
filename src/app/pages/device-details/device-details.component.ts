@@ -279,7 +279,7 @@ export class DeviceDetailsComponent implements OnInit {
     _newChartOption = {
         title: {
             text: 'Sensor Readings',
-            subtext: 'Data from sensor 1 and sensor 2',
+            subtext: 'Data from accelerometer',
             x: 'center'
         },
         tooltip: {
@@ -289,7 +289,7 @@ export class DeviceDetailsComponent implements OnInit {
             }
         },
         legend: {
-            data: ['s1', ' s2'],
+            data: ['X', ' Y'],
             x: 'left'
         },
         toolbox: {
@@ -348,20 +348,20 @@ export class DeviceDetailsComponent implements OnInit {
         ],
         yAxis: [
             {
-                name: 's1',
+                name: 'X',
                 type: 'value'
               
             },
             {
                 gridIndex: 1,
-                name: 's2',
+                name: 'Y',
                 type: 'value',
                 inverse: true
             }
         ],
         series: [
             {
-                name: 's1',
+                name: 'X',
                 type: 'line',
                 symbolSize: 8,
                 hoverAnimation: false,
@@ -370,7 +370,7 @@ export class DeviceDetailsComponent implements OnInit {
                 ]
             },
             {
-                name: 's2',
+                name: 'Y',
                 type: 'line',
                 xAxisIndex: 1,
                 yAxisIndex: 1,
